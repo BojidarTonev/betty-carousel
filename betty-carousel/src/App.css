@@ -1,0 +1,13 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #131101, #645b0d);
+}
+
+.logo-image {
+  width: 320px;
+  height: 150px;
+}

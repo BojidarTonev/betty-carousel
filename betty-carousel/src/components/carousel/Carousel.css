@@ -1,6 +1,7 @@
 .carousel-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -14,7 +15,6 @@
     padding: 0 35px;
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: calc((100% / 3) - 16px);
     grid-gap: 28px;
     overflow-x: scroll;
     scroll-behavior: smooth;
@@ -55,27 +55,36 @@
     border-radius: 50%;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 850px) {
     .carousel {
-        grid-auto-columns: calc((100% / 2) - 16px);
+        grid-auto-columns: calc((100% / 2) - 120px) !important;
     }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 750px) {
     .carousel {
-        grid-auto-columns: calc((100% / 2) - 32px);
+        grid-auto-columns: calc((100% / 2) + 20px) !important;
     }
 }
 
 @media screen and (max-width: 630px) {
     .carousel {
+        grid-auto-columns: calc((100% / 2) - 20px) !important;
         padding: 0;
     }
 }
 
+@media screen and (max-width: 600px) {
+    .carousel {
+        grid-auto-columns: calc((100% / 2) - 32px) !important;
+    }
+}
+
+
+
 @media screen and (max-width: 500px) {
     .carousel {
-        grid-auto-columns: 100%;
+        grid-auto-columns: 100% !important;
     }
 
     .carousel-item {

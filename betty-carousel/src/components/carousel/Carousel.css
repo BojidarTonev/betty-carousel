@@ -8,8 +8,8 @@
 }
 
 .carousel {
-    border-top: 3px solid black;
-    border-bottom: 3px solid black;
+    border-top: 10px solid #736426;
+    border-bottom: 10px solid #736426;
     margin: 50px;
     padding: 0 35px;
     display: grid;
@@ -20,6 +20,7 @@
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .carousel::-webkit-scrollbar {
@@ -41,14 +42,43 @@
     border-radius: 50%;
 }
 
+.loaderWrapper {
+    position: absolute;
+    top: 220px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 3px solid black;
+    height: 120px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
 @media screen and (max-width: 750px) {
     .carousel {
         grid-auto-columns: calc((100% / 2) - 16px);
     }
 }
 
+@media screen and (max-width: 650px) {
+    .carousel {
+        grid-auto-columns: calc((100% / 2) - 32px);
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .carousel {
+        padding: 0;
+    }
+}
+
 @media screen and (max-width: 500px) {
     .carousel {
         grid-auto-columns: 100%;
+    }
+
+    .carousel-item {
+        margin: 0 auto;
     }
 }

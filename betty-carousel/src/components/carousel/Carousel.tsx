@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
+import { Hourglass } from 'react-loader-spinner'
 import './Carousel.css';
 
 interface CarouselProps {
@@ -20,7 +21,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         setIsLoading(true);
         const data = images.slice(start, end);
         // Simulate delay from API
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         setIsLoading(false);
         return data;
     }
@@ -29,7 +30,11 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         const nextRangeStart = displayedImages.length;
         const nextRangeEnd = displayedImages.length + ITEMS_PER_LOAD;
         const newData = await fetchData(nextRangeStart, nextRangeEnd);
-        setDisplayedImages(prevImages => [...prevImages, ...newData]);
+        if (displayedImages.length === 0) {
+            setDisplayedImages(newData);
+        } else {
+            setDisplayedImages(prevImages => [...prevImages, ...newData]);
+        }
     };
 
     useEffect(() => {
@@ -59,12 +64,13 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 
     useEffect(() => {
         const carouselElement = carouselRef.current;
+        const carouselItemElement = carouselItemRef.current;
 
         if (carouselElement) {
             // If scroll reaches the threshold, get more data, so the user
             // doesn't see loader or any disruption with the scroll flow for better UX
             const { scrollLeft, scrollWidth, clientWidth } = carouselElement;
-            const carouselItemWidth = carouselItemRef.current?.getBoundingClientRect().width || 0;
+            const carouselItemWidth = carouselItemElement?.getBoundingClientRect().width || 0;
             if (scrollWidth - scrollLeft - clientWidth <= BUFFER_SIZE * carouselItemWidth && !isLoading) {
                 loadElements();
             }
@@ -72,20 +78,24 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     }, [scrollPosition, images]);
 
     return (
-        <div className="carousel-container">
-            {isLoading && <div>loading...</div>}
-            <div
-                className="carousel"
-                ref={carouselRef}
-                style={{ display: 'grid', gridAutoFlow: 'column' }}
-            >
-                {displayedImages.map((image, index) => (
-                    <div className="carousel-item" key={index} ref={index === 0 ? carouselItemRef : null}>
-                        <img src={image} alt={`carousel-item-${index}`} />
-                    </div>
-                ))}
+        <>
+            <div className="carousel-container">
+                <div
+                    className="carousel"
+                    ref={carouselRef}
+                    style={{ borderTopWidth: displayedImages.length === 0 ? 0 : 10, borderBottomWidth: displayedImages.length === 0 ? 0 : 10 }}
+                >
+                    {displayedImages.map((image, index) => (
+                        <div className="carousel-item" key={index} ref={index === 0 ? carouselItemRef : null}>
+                            <img src={image} alt={`carousel-item-${index}`} />
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
+            {isLoading && (<div className="loaderWrapper">
+                <Hourglass colors={['#736426', '#a58f35']} height={80} width={80} wrapperClass="loader"/>
+            </div>)}
+        </>
     );
 };
 

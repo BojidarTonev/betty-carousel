@@ -4,10 +4,20 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(to bottom right, #131101, #645b0d);
+  background-image: url('./assets/background-image.png');
+  background-size: 100% 100%;
 }
 
 .logo-image {
   width: 320px;
   height: 150px;
+  position: absolute;
+  top: 35px;
+}
+
+
+@media screen and (max-width: 910px) {
+  .App {
+    background-image: url('./assets/background 6-9.png') !important;
+  }
 }

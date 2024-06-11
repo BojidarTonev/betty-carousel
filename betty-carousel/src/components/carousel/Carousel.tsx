@@ -4,18 +4,20 @@ import './Carousel.css';
 
 interface CarouselProps {
     images: string[];
+    scrollSpeed?: number;
+    itemsPerLoad?: number;
 }
 
-const ITEMS_PER_LOAD = 16;
-const BUFFER_SIZE = ITEMS_PER_LOAD / 1.3;
+const Carousel: React.FC<CarouselProps> = ({ images, scrollSpeed = 2.5, itemsPerLoad = 16 }) => {
+    const BUFFER_SIZE = itemsPerLoad / 1.3;
 
-const Carousel: React.FC<CarouselProps> = ({ images }) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const carouselItemRef = useRef<HTMLDivElement>(null);
 
     const [displayedImages, setDisplayedImages] = useState<string[]>([]);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     const fetchData = async (start: number, end: number): Promise<string[]> => {
         setIsLoading(true);
@@ -28,7 +30,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 
     const loadElements = async () => {
         const nextRangeStart = displayedImages.length;
-        const nextRangeEnd = displayedImages.length + ITEMS_PER_LOAD;
+        const nextRangeEnd = displayedImages.length + itemsPerLoad;
         const newData = await fetchData(nextRangeStart, nextRangeEnd);
         if (displayedImages.length === 0) {
             setDisplayedImages(newData);
@@ -43,7 +45,6 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         const handleWheel = (event: WheelEvent) => {
             if (carouselElement) {
                 const { deltaY } = event;
-                const scrollSpeed = 2.5; // Increase this value to make scrolling faster
 
                 // Scroll the carousel
                 carouselElement.scrollLeft += deltaY * scrollSpeed;

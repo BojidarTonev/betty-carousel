@@ -22,7 +22,7 @@ function App() {
       />
       <Carousel
           images={Array.from({ length: timesToDuplicate }, () => catUrls).flat()}
-          scrollSpeed={10}
+          scrollSpeed={3}
           itemsPerLoad={18}
       />
     </div>
